@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/router/router.dart';
-import '../../utils/app_colors.dart';
 import '../../utils/general_widgets/simple_input.dart';
 import '../bloc/auth_bloc.dart';
 
