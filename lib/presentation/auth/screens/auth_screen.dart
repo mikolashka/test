@@ -41,7 +41,6 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.grey,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state.errorMessage != null) {}
@@ -90,7 +89,6 @@ class _AuthScreenState extends State<AuthScreen> {
                   width: double.infinity,
                   child: SecondaryElevationButton(
                     title: 'Зарегистрироваться',
-                    bgColor: AppColors.grey,
                     onPressed: () => context.router.push(const RegisterRoute()),
                   ),
                 ),

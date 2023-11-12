@@ -29,9 +29,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       email: email,
       password: password,
     );
-    final token = await FirebaseAuth.instance.currentUser?.getIdToken();
-    if (token != null) {
-      repository.saveAuthToken(token.toString());
+    if (FirebaseAuth.instance.currentUser != null) {
       emit(state.copyWith(authSuccess: true));
     }
   }
@@ -46,8 +44,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       email: email,
       password: password,
     );
-    if (credentional.credential?.token != null) {
-      repository.saveAuthToken(credentional.credential!.token.toString());
+    if (credentional.credential?.accessToken != null) {
       emit(state.copyWith(authSuccess: true));
     }
   }

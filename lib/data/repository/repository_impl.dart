@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:devtools_test/data/managers/data_manager.dart';
 import 'package:devtools_test/data/models/operation_type.dart';
 import 'package:devtools_test/data/repository/repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,24 +7,7 @@ import '../models/main_screen_model.dart';
 import '../models/transaction_model.dart';
 
 class RepositoryImpl extends Repository {
-  final DataManager dataManager;
-
-  RepositoryImpl({required this.dataManager});
-
-  @override
-  Future<String?> getAuthToken() {
-    return dataManager.getToken();
-  }
-
-  @override
-  Future<void> saveAuthToken(String token) async {
-    dataManager.saveAuthToken(token);
-  }
-
-  @override
-  void saveUserId(String id) async {
-    dataManager.saveUserId(id);
-  }
+  RepositoryImpl();
 
   @override
   Future<MainScreenModel> fetchUserTransactions() async {
@@ -33,19 +15,17 @@ class RepositoryImpl extends Repository {
     final snapshot = await db.get();
     final result =
         snapshot.docs.map((e) => TransactionModel.fromJson(e.data()).setId(e.id)).toList();
-    int replenishmentSum = _getSumReplenishment(result);
-    int transferSum = _getSumTransfer(result);
-    int withdrawalSum = _getSumWithdrawal(result);
     int totalSum = _getTotalSum(result);
+
     return MainScreenModel(
-      replenishmentPercent: replenishmentSum / totalSum * 100,
-      transferPercent: transferSum / totalSum * 100,
-      withdrawalPercent: withdrawalSum / totalSum * 100,
+      replenishmentPercent: _getPercentReplenishment(result, totalSum),
+      transferPercent: _getPercentTransfer(result, totalSum),
+      withdrawalPercent: _getPercentWithdrawal(result, totalSum),
       transactionList: result,
     );
   }
 
-  int _getSumReplenishment(List<TransactionModel> transactionList) {
+  double _getPercentReplenishment(List<TransactionModel> transactionList, int totalSum) {
     int sum = 0;
     for (var e in transactionList) {
       if (e.operationType == OperationType.replenishment) {
@@ -53,10 +33,10 @@ class RepositoryImpl extends Repository {
         sum += total ?? 0;
       }
     }
-    return sum;
+    return sum / totalSum * 100;
   }
 
-  int _getSumTransfer(List<TransactionModel> transactionList) {
+  double _getPercentTransfer(List<TransactionModel> transactionList, int totalSum) {
     int sum = 0;
     for (var e in transactionList) {
       if (e.operationType == OperationType.transfer) {
@@ -64,10 +44,10 @@ class RepositoryImpl extends Repository {
         sum += total ?? 0;
       }
     }
-    return sum;
+    return sum / totalSum * 100;
   }
 
-  int _getSumWithdrawal(List<TransactionModel> transactionList) {
+  double _getPercentWithdrawal(List<TransactionModel> transactionList, int totalSum) {
     int sum = 0;
     for (var e in transactionList) {
       if (e.operationType == OperationType.withdrawal) {
@@ -75,7 +55,7 @@ class RepositoryImpl extends Repository {
         sum += total ?? 0;
       }
     }
-    return sum;
+    return sum / totalSum * 100;
   }
 
   int _getTotalSum(List<TransactionModel> transactionList) {

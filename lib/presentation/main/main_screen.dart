@@ -1,7 +1,7 @@
 import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:devtools_test/data/models/operation_type.dart';
-import 'package:devtools_test/presentation/main/add_transaction_screen.dart';
+import 'package:devtools_test/presentation/main/widgets/add_transaction_screen.dart';
 import 'package:devtools_test/presentation/main/widgets/transaction_list_item.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';

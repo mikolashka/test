@@ -1,23 +1,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../data/models/operation_type.dart';
-import '../utils/app_colors.dart';
-import '../utils/general_widgets/primary_button.dart';
-import '../utils/general_widgets/simple_input.dart';
-import 'bloc/main_bloc.dart';
+import '../../../core/validations/validations.dart';
+import '../../../data/models/operation_type.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/general_widgets/primary_button.dart';
+import '../../utils/general_widgets/simple_input.dart';
+import '../bloc/main_bloc.dart';
 
-class AddTransactionScreen extends StatefulWidget{
+class AddTransactionScreen extends StatefulWidget {
   const AddTransactionScreen({super.key});
 
   @override
   State<StatefulWidget> createState() => _AddTransactionScreenState();
-
 }
 
-class _AddTransactionScreenState extends State<AddTransactionScreen>{
+class _AddTransactionScreenState extends State<AddTransactionScreen> {
   late TextEditingController _dateTransaction;
   late TextEditingController _sum;
   late TextEditingController _commission;
@@ -28,7 +29,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
   late MainBloc mainBloc;
 
   final _formKey = GlobalKey<FormState>();
-  DateTime? lastDate;
+  DateTime? lastDate = DateTime.now();
 
   @override
   void initState() {
@@ -56,9 +57,19 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-      appBar: AppBar(leading: GestureDetector(onTap:()=> context.router.pop(),child: const Icon(Icons.close, color: AppColors.grey,)), backgroundColor: AppColors.dirtyWhite,elevation: 0,),
-      body: Form(
+    return Scaffold(
+      appBar: AppBar(
+        leading: GestureDetector(
+            onTap: () => context.router.pop(),
+            child: const Icon(
+              Icons.close,
+              color: AppColors.dirtyWhite,
+            )),
+        backgroundColor: AppColors.background,
+        elevation: 0,
+      ),
+      body: SingleChildScrollView(
+        child: Form(
           key: _formKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -68,11 +79,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                 SimpleInputLayout(
                   title: 'Дата транзакции',
                   readOnly: true,
+                  validator: Validations.notNull,
                   onClick: () {
                     showModalBottomSheet(
                       context: context,
                       isScrollControlled: true,
-                      backgroundColor: AppColors.dirtyWhite,
+                      backgroundColor: AppColors.background,
                       clipBehavior: Clip.hardEdge,
                       constraints: const BoxConstraints(maxHeight: 290),
                       shape: RoundedRectangleBorder(
@@ -86,7 +98,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                             Container(
                               width: double.infinity,
                               decoration: const BoxDecoration(
-                                color: Color(0xFFF4F4F5),
+                                color: AppColors.background,
                               ),
                               height: 42,
                               child: Align(
@@ -103,6 +115,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                                     padding: EdgeInsets.only(left: 16.0),
                                     child: Text(
                                       'Готово',
+                                      style: TextStyle(color: AppColors.dirtyWhite),
                                     ),
                                   ),
                                 ),
@@ -111,18 +124,18 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                             Container(
                               height: 216,
                               padding: const EdgeInsets.only(top: 6.0),
-                              color: CupertinoColors.white,
+                              color: AppColors.background,
                               child: DefaultTextStyle(
                                 style: const TextStyle(
-                                  color: CupertinoColors.black,
+                                  color: AppColors.dirtyWhite,
                                   fontSize: 22.0,
                                 ),
                                 child: GestureDetector(
-                                  // Blocks taps from propagating to the modal sheet and popping.
                                   onTap: () {},
                                   child: SafeArea(
                                     top: false,
                                     child: CupertinoDatePicker(
+                                      backgroundColor: AppColors.background,
                                       mode: CupertinoDatePickerMode.date,
                                       initialDateTime: DateTime.now(),
                                       maximumDate: DateTime.now(),
@@ -145,27 +158,38 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                 const SizedBox(height: 16),
                 SimpleInputLayout(
                   title: 'Сумма',
+                  validator: Validations.notNull,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  keyboardType: TextInputType.number,
                   controller: _sum,
                 ),
                 const SizedBox(height: 16),
                 SimpleInputLayout(
                   title: 'Комиссия',
+                  validator: Validations.notNull,
+                  keyboardType: TextInputType.number,
                   controller: _commission,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
                 const SizedBox(height: 16),
                 SimpleInputLayout(
                   title: 'Итого',
+                  validator: Validations.notNull,
+                  keyboardType: TextInputType.number,
                   controller: _total,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
                 const SizedBox(height: 16),
                 SimpleInputLayout(
                   title: 'Номер транзакции',
+                  validator: Validations.notNull,
                   controller: _numberTransaction,
                 ),
                 const SizedBox(height: 16),
                 SimpleInputLayout(
                   title: 'Тип операции',
                   readOnly: true,
+                  validator: Validations.notNull,
                   onClick: () {
                     showModalBottomSheet(
                       context: context,
@@ -177,7 +201,7 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
                         return Wrap(
                           children: List.generate(
                             OperationType.values.length,
-                                (index) => Padding(
+                            (index) => Padding(
                               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8),
                               child: ListTile(
                                 onTap: () => _selectOperationType(OperationType.values[index]),
@@ -206,10 +230,12 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
             ),
           ),
         ),
+      ),
     );
   }
 
   void _saveTransaction() {
+    if (!_formKey.currentState!.validate()) return;
     mainBloc.add(SaveTransactionEvent(
         dateTransaction: lastDate?.toString() ?? '',
         sum: _sum.text,
@@ -222,11 +248,10 @@ class _AddTransactionScreenState extends State<AddTransactionScreen>{
   void _selectOperationType(OperationType operationType) {
     context.router.pop();
     setState(
-          () {
+      () {
         _operationType.text = operationType.displayValue();
       },
     );
     selectOperationType = operationType;
   }
-
 }

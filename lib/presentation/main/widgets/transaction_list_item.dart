@@ -27,19 +27,19 @@ class _TransactionListItemState extends State<TransactionListItem>{
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        title: Text(widget.item.operationType.displayValue()),
+        title: Text(widget.item.operationType.displayValue(), style: const TextStyle(color: AppColors.dirtyWhite),),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.item.total),
-            Text(widget.item.numberTransaction),
+            Text(widget.item.total, style: const TextStyle(color: AppColors.grayText),),
+            Text(widget.item.numberTransaction,style: const TextStyle(color: AppColors.grayText),),
           ],
         ),
         onTap: () {
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
-            backgroundColor: AppColors.dirtyWhite,
+            backgroundColor: AppColors.background,
             clipBehavior: Clip.hardEdge,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
@@ -99,8 +99,8 @@ class TransactionInfoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(header),
-      subtitle: Text(value),
+      title: Text(header, style: const TextStyle(color: AppColors.dirtyWhite),),
+      subtitle: Text(value,style: const TextStyle(color: AppColors.grayText),),
     );
   }
 }

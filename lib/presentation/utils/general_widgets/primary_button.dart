@@ -12,7 +12,7 @@ class PrimaryElevationButton extends StatelessWidget{
     return  ElevatedButton(
       onPressed:onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.yellow,
+        backgroundColor: AppColors.blue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(28.0),
         ),
@@ -24,6 +24,7 @@ class PrimaryElevationButton extends StatelessWidget{
           style: const TextStyle(
             fontSize: 16.0,
             fontWeight: FontWeight.bold,
+            color: AppColors.dirtyWhite
           ),
         ),
       ),
@@ -33,18 +34,17 @@ class PrimaryElevationButton extends StatelessWidget{
 class SecondaryElevationButton extends StatelessWidget{
   final VoidCallback onPressed;
   final String title;
-  final Color? bgColor;
-  const SecondaryElevationButton({super.key, required this.onPressed, required this.title, this.bgColor});
+  const SecondaryElevationButton({super.key, required this.onPressed, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: () =>onPressed(),
       style: ElevatedButton.styleFrom(
-        backgroundColor: bgColor ?? AppColors.transparent,
+        backgroundColor:  AppColors.transparent,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(28.0),
-            side: const BorderSide(width: 2, color: AppColors.orange)),
+            side: const BorderSide(width: 2, color: AppColors.blue)),
       ),
       child:  Padding(
         padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -53,7 +53,7 @@ class SecondaryElevationButton extends StatelessWidget{
           style: const TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.w500,
-              color: AppColors.orange),
+              color: AppColors.blue),
         ),
       ),
     );

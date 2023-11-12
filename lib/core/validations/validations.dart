@@ -24,4 +24,11 @@ class Validations{
 
     return null;
   }
+
+  static String? notNull(String? value){
+    if(value?.trim().isEmpty == true){
+      return 'Поле обязятельно для заполнения';
+    }
+    return null;
+  }
 }

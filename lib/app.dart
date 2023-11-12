@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:devtools_test/presentation/auth/bloc/auth_bloc.dart';
 import 'package:devtools_test/presentation/initial/bloc/initial_bloc.dart';
 import 'package:devtools_test/presentation/main/bloc/main_bloc.dart';
+import 'package:devtools_test/presentation/utils/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,6 +47,7 @@ class _AppState extends State<App> {
           repository: getIt(),
       ),),
     ], child: MaterialApp.router(
+      theme: MainTheme.theme,
       routerConfig: getIt.get<RouterService>().appRouter.config(),
       debugShowCheckedModeBanner: false,
     ),);
