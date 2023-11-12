@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../data/wrapped.dart';
+import '../../../core/wrapped.dart';
 import '../../../data/repository/repository.dart';
 
 part 'auth_event.dart';
