@@ -1,16 +1,11 @@
-# devtools_test
+Привет, это тестовое задание для devtools. 
+Хотел бы еще описать почему использовал bloc: Я никогда не использовал redux и разбираться в нем в столь сжатые сроки не особо хотелось. Плюс ко всему bloc является рекомендуемым инструментом для работы с state.
 
-A new Flutter project.
+Также прошу строго не судить за работу с файрстором и авторизацией на файрбейзе потому что это был мой первый опыт работы с этими инструментами)
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+В целом наверное реализация всего далека от идеала, но сроки были достаточно сжатые) Буду рад услышать фидбэк)
+Также можете задавать вопросы про реализацию и почему я сделал именно так, а не иначе)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Можете писать мне в телеграм: @mikolashkas.
